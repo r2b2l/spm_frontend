@@ -1,0 +1,23 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="createUserForm">
+    <!-- <mat-form-field class="col-md-12"> -->
+        <!-- <mat-label>Identifiant</mat-label> -->
+        <input matInput [(ngModel)]="user.username" [formControl]="usernameFC" name="description" type="text" required>
+        <!-- <mat-error *ngIf="usernameFC.invalid">{{ getUsernameErrorMessage() }}</mat-error> -->
+    <!-- </mat-form-field> -->
+    <!-- <mat-form-field class="col-md-12"> -->
+        <!-- <mat-label>Mail</mat-label> -->
+        <input matInput [(ngModel)]="user.mail" [formControl]="mailFC" name="description" type="email" required>
+        <!-- <mat-error *ngIf="mailFC.invalid">{{ getMailErrorMessage() }}</mat-error> -->
+    <!-- </mat-form-field> -->
+    <!-- <mat-form-field class="col-md-12"> -->
+        <!-- <mat-label>Mot de passe</mat-label> -->
+        <input matInput [(ngModel)]="user.password" [formControl]="passwordFC" name="password"
+            [type]="hidePassword ? 'password' : 'text'" required>
+        <!-- <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" class="hide-icon-button" -->
+            <!-- [attr.aria-label]="'Cacher mot de passe'"> -->
+            <!-- <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon> -->
+        <!-- </button> -->
+        <!-- <mat-error *ngIf="passwordFC.invalid">{{ getPasswordErrorMessage() }}</mat-error> -->
+    <!-- </mat-form-field> -->
+    <button mat-raised-button type="submit" [disabled]="!createUserForm.valid" color="primary">Créer le compte</button>
+</form>
