@@ -33,6 +33,7 @@ export class AuthService {
    * @param redirectRoute 
    */
   login(user: User, redirectRoute: string): void {
+    console.log('login', user, redirectRoute);
     this.http.post<ApiLoginResponse>(this.apiUrl + '/login', {
       mail: user.mail,
       password: user.password

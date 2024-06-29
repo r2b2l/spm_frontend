@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth/auth-service.service';
 import { User } from '../../models/user/user';
@@ -7,6 +7,8 @@ import { User } from '../../models/user/user';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
+  standalone: true,
+  imports: [FormsModule, ReactiveFormsModule],
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
@@ -40,7 +42,10 @@ export class LoginComponent implements OnInit {
   * Submit the form and redirect to caller
   */
   onSubmit() {
-    this.authService.login(this.user, this.redirectRoute);
+    if (!this.loginForm.invalid) {
+      const user = new User(0, this.mailFC.value, '', this.passwordFC.value, '');
+      this.authService.login(user, this.redirectRoute);
+    }
   }
 
     /**
