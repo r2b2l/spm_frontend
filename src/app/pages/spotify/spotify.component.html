@@ -1,0 +1,16 @@
+<div class="w-64 p-6 my-5 mx-2 bg-white rounded-xl shadow-lg">
+    <div class="flex">
+        Spotify
+    </div>
+</div>
+@if (!isConnected) {
+    <div class="w-64 p-6 my-5 mx-2 bg-white rounded-xl shadow-lg">
+        <div class="flex">
+            Se connecter à Spotify
+            <a (click)="connect()" class="btn btn-primary">Log in with Spotify</a>
+        </div>
+    </div>
+}
+@else {
+
+}
