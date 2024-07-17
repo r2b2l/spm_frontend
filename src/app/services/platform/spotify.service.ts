@@ -7,7 +7,8 @@ import { Observable, tap } from 'rxjs';
   providedIn: 'root'
 })
 export class SpotifyService {
-  private apiUrl = environment.apiUrl + '/platform';
+  private apiUrl = environment.apiUrl;
+  private platformApiUrl = environment.apiUrl + '/platform';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -15,12 +16,17 @@ export class SpotifyService {
   constructor(private http: HttpClient) { }
 
   isConnected(): Observable<any> {
-    const getUrl = this.apiUrl + '/isConnectedTo/1'; // 1 is the Spotoify platform id, should be nammed isConnected/spotify
+    const getUrl = this.platformApiUrl + '/isConnectedTo/1'; // 1 is the Spotoify platform id, should be nammed isConnected/spotify
     return this.http.get(getUrl, this.httpOptions);
   }
 
   connect(): Observable<any> {
-    const getUrl = this.apiUrl + '/connect/spotify';
+    const getUrl = this.platformApiUrl + '/connect/spotify';
+    return this.http.get(getUrl, this.httpOptions);
+  }
+
+  getPlaylists(): Observable<any> {
+    const getUrl = this.apiUrl + '/spotify/playlists';
     return this.http.get(getUrl, this.httpOptions);
   }
 }
