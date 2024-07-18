@@ -1,6 +1,5 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, throwError } from 'rxjs';
 import { catchError, finalize, tap } from 'rxjs/operators';
 
@@ -11,7 +10,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   private readonly TOKEN_KEY = 'auth_token';
   public isSpinnerVisible = false;
 
-  constructor(private snackBar: MatSnackBar) { }
+  constructor() { }
 
   /**
    * Catch HTTP requests and process on success or error
@@ -43,7 +42,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   private handleHttpResponse(response: HttpResponse<any>): void {
     if (response.status === 201) {
       // Requête POST réussie avec retour 201
-      this.showSnackbar('Element ajouté avec succès.', true);
+      // this.showSnackbar('Element ajouté avec succès.', true);
     }
   }
 
@@ -53,6 +52,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
    */
   private handleHttpError(error: HttpErrorResponse): void {
     let errorMessage = 'Une erreur s\'est produite.';
+    console.log('handleHttpError');
 
     if (error.error instanceof ErrorEvent) {
       // Erreur côté client
@@ -63,20 +63,20 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       }
     }
 
-    this.showSnackbar(errorMessage, false);
+    // this.showSnackbar(errorMessage, false);
   }
 
-  /**
-   * Trigger the snackbar
-   * @param message 
-   * @param isSuccess 
-   */
-  private showSnackbar(message: string, isSuccess: boolean): void {
-    this.snackBar.open(message, 'Fermer', {
-      duration: 5000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom',
-      panelClass: [isSuccess ? 'success-snackbar' : 'error-snackbar'] // Classe CSS personnalisée pour la couleur verte
-    });
-  }
+  // /**
+  //  * Trigger the snackbar
+  //  * @param message 
+  //  * @param isSuccess 
+  //  */
+  // private showSnackbar(message: string, isSuccess: boolean): void {
+  //   this.snackBar.open(message, 'Fermer', {
+  //     duration: 5000,
+  //     horizontalPosition: 'center',
+  //     verticalPosition: 'bottom',
+  //     panelClass: [isSuccess ? 'success-snackbar' : 'error-snackbar'] // Classe CSS personnalisée pour la couleur verte
+  //   });
+  // }
 }

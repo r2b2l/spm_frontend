@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { DOCUMENT } from '@angular/common';
+import { BehaviorSubject } from 'rxjs';
 
 interface ApiLoginResponse {
   isSuccess: boolean;
@@ -18,6 +19,8 @@ export class AuthService {
   private readonly TOKEN_KEY = 'auth_token';
   private apiUrl = environment.apiUrl;
   private localStorage: Storage | undefined;
+  private authTokenSource = new BehaviorSubject<string | null>(null);
+  authToken$ = this.authTokenSource.asObservable();
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -68,7 +71,9 @@ export class AuthService {
     if (!this.localStorage) {
       return null;
     }
-    return this.localStorage.getItem(this.TOKEN_KEY);
+    const token = this.localStorage.getItem(this.TOKEN_KEY);
+    this.authTokenSource.next(token);
+    return token
   }
 
   /**
@@ -78,7 +83,8 @@ export class AuthService {
   set authToken(token: string | null) {
     if (this.localStorage) {
       if (token) {
-        this.localStorage.setItem(this.TOKEN_KEY, token)
+        this.localStorage.setItem(this.TOKEN_KEY, token);
+        this.authTokenSource.next(token);
       } else {
         this.localStorage.removeItem(this.TOKEN_KEY);
       }

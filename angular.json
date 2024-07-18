@@ -32,9 +32,14 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/assets/css/argon-dashboard-tailwind.css",
+              "src/styles.scss",
+              "src/assets/css/nucleo-icons.css",
+              "src/assets/css/nucleo-svg.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "src/assets/js/argon-dashboard-tailwind.js"
+            ],
             "server": "src/main.server.ts",
             "prerender": true,
             "ssr": {
@@ -96,9 +101,14 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/assets/css/argon-dashboard-tailwind.css",
+              "src/styles.scss",
+              "src/assets/css/nucleo-icons.css",
+              "src/assets/css/nucleo-svg.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/js/argon-dashboard-tailwind.js"
+            ]
           }
         }
       }

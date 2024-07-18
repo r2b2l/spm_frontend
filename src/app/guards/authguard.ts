@@ -13,7 +13,6 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot
   ): boolean {
     const redirectTo = route.data['redirecTo'];
-
     if (!this.authService.isUserAuthenticated) {
       this.authService.authToken = null;
       this.router.navigateByUrl('/login?redirectAfterLogin=' + redirectTo);
