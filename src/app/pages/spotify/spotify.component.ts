@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { SpotifyService } from '../../services/platform/spotify.service';
 import { CommonModule, DatePipe } from '@angular/common';
+import { TracksComponent } from './playlist/tracks/tracks.component';
 
 @Component({
   selector: 'app-spotify',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TracksComponent],
   templateUrl: './spotify.component.html',
   styleUrl: './spotify.component.scss',
   providers: [DatePipe]
@@ -14,6 +15,7 @@ export class SpotifyComponent implements OnInit {
   isLoading: boolean = false;
   isConnected: boolean = false;
   playlists: Array<any> = [];
+  playlistTracksActives: Array<boolean> = [];
   constructor(private spotifyService: SpotifyService) { }
 
   ngOnInit(): void {
@@ -42,6 +44,10 @@ export class SpotifyComponent implements OnInit {
   getPlaylists() {
     this.spotifyService.getPlaylists().subscribe((data: any) => {
       this.playlists = data;
+      // For each playlist, add a new entry in playlistTracksActives with key the playlist id and value false
+      this.playlists.forEach((playlist: any) => {
+        this.playlistTracksActives[playlist.id] = false;
+      });
       this.isLoading = false;
     });
   }
@@ -70,7 +76,32 @@ export class SpotifyComponent implements OnInit {
     }
   }
 
-  openPlaylist(playlist: any) {
-    console.log('openPlaylist', playlist);
+  openPlaylistModal(playlistId: number) {
+    console.log('openPlaylistModal', playlistId);
+    const modal = document.getElementById('modal-' + playlistId);
+    // Check if modal element exists before removing the 'hidden' class
+    if (modal) {
+      modal.classList.remove('hidden');
+      modal.classList.remove('opacity-0');
+      modal.setAttribute('aria-hidden', 'false');
+
+      // Set the initiate track list component to true
+      this.playlistTracksActives[playlistId] = true;
+    }
+  }
+
+  closePlaylistModal(playlistId: number) {
+    console.log('closePlaylistModal', playlistId);
+    const modal = document.getElementById('modal-' + playlistId);
+    // Check if modal element exists before adding the 'hidden' class
+    if (modal) {
+      modal.classList.add('opacity-0');
+      modal.setAttribute('aria-hidden', 'true');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 500);
+
+      this.playlistTracksActives[playlistId] = false;
+    }
   }
 }

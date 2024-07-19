@@ -29,4 +29,9 @@ export class SpotifyService {
     const getUrl = this.apiUrl + '/spotify/playlists';
     return this.http.get(getUrl, this.httpOptions);
   }
+
+  getTracks(playlistId: number): Observable<any> {
+    const getUrl = this.apiUrl + '/spotify/playlist/' + playlistId + '/tracks';
+    return this.http.get(getUrl, this.httpOptions);
+  }
 }
