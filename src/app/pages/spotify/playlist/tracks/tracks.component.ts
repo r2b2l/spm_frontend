@@ -12,6 +12,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 })
 export class TracksComponent implements OnInit, OnChanges {
   @Input() playlistId: number = 0;
+  @Input() reloadPlaylist: number = 0;
   tracks: Array<any> = [];
 
   constructor(private spotifyService: SpotifyService) {
@@ -25,6 +26,9 @@ export class TracksComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log('playlistId', this.playlistId);
+    if (changes['reloadPlaylist'] && changes['reloadPlaylist'].currentValue > changes['reloadPlaylist'].previousValue) {
+      this.getTracks();
+    }
   }
 
   getTracks() {

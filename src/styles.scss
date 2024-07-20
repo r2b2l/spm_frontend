@@ -6,3 +6,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+// Scrollbar thin
+::-webkit-scrollbar {
+    // use thin rule
+    width: 9px;
+}

@@ -16,6 +16,7 @@ export class SpotifyComponent implements OnInit {
   isConnected: boolean = false;
   playlists: Array<any> = [];
   playlistTracksActives: Array<boolean> = [];
+  playlistTracksReload: Array<number> = [];
   constructor(private spotifyService: SpotifyService) { }
 
   ngOnInit(): void {
@@ -47,6 +48,7 @@ export class SpotifyComponent implements OnInit {
       // For each playlist, add a new entry in playlistTracksActives with key the playlist id and value false
       this.playlists.forEach((playlist: any) => {
         this.playlistTracksActives[playlist.id] = false;
+        this.playlistTracksReload[playlist.id] = 0;
       });
       this.isLoading = false;
     });
@@ -77,7 +79,6 @@ export class SpotifyComponent implements OnInit {
   }
 
   openPlaylistModal(playlistId: number) {
-    console.log('openPlaylistModal', playlistId);
     const modal = document.getElementById('modal-' + playlistId);
     // Check if modal element exists before removing the 'hidden' class
     if (modal) {
@@ -90,8 +91,11 @@ export class SpotifyComponent implements OnInit {
     }
   }
 
+  reloadPlaylist(playlistId: number) {
+    this.playlistTracksReload[playlistId]++;
+  }
+
   closePlaylistModal(playlistId: number) {
-    console.log('closePlaylistModal', playlistId);
     const modal = document.getElementById('modal-' + playlistId);
     // Check if modal element exists before adding the 'hidden' class
     if (modal) {
