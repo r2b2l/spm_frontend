@@ -37,4 +37,16 @@ export class TracksComponent implements OnInit, OnChanges {
       this.tracks = data.items;
     });
   }
+
+  disablePlaylistTracks(tracksIds: Array<number>) {
+    // TEST : Reduce tracks to an array of ids
+    tracksIds = this.tracks.map((track: any) => {
+      console.log(track);
+      return track.id;
+    });
+    console.log(tracksIds);
+    this.spotifyService.disablePlaylistTracks(this.playlistId, tracksIds, true).subscribe((data: any) => {
+      this.getTracks();
+    });
+  }
 }
