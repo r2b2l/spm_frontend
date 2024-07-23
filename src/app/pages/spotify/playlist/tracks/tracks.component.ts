@@ -14,6 +14,8 @@ export class TracksComponent implements OnInit, OnChanges {
   @Input() playlistId: number = 0;
   @Input() reloadPlaylist: number = 0;
   tracks: Array<any> = [];
+  selectedTracks: Array<string> = [];
+  isEveryTrackSelected: boolean = false;
 
   constructor(private spotifyService: SpotifyService) {
    }
@@ -38,15 +40,39 @@ export class TracksComponent implements OnInit, OnChanges {
     });
   }
 
-  disablePlaylistTracks(tracksIds: Array<number>) {
-    // TEST : Reduce tracks to an array of ids
-    tracksIds = this.tracks.map((track: any) => {
-      console.log(track);
-      return track.id;
-    });
-    console.log(tracksIds);
-    this.spotifyService.disablePlaylistTracks(this.playlistId, tracksIds, true).subscribe((data: any) => {
-      this.getTracks();
-    });
+  selectAll() {
+    this.isEveryTrackSelected = !this.isEveryTrackSelected;
+    // if this.isEveryTrackSelected is true, put every track in selectedTracks
+    if (this.isEveryTrackSelected) {
+      this.selectedTracks = this.tracks.map((track: any) => track.id.id);
+    } else {
+      this.selectedTracks = [];
+    }
+    console.log(this.selectedTracks);
+  }
+
+  selectTrack(trackId: string) {
+    // if the track is in selectedTracks, remove it. Otherwise, add it
+    if (this.selectedTracks.includes(trackId)) {
+      this.selectedTracks = this.selectedTracks.filter((track: string) => track !== trackId);
+    } else {
+      this.selectedTracks.push(trackId);
+    }
+  }
+
+  disablePlaylistTracks() {
+    if (this.selectedTracks.length > 0) {
+      this.spotifyService.disablePlaylistTracks(this.playlistId, this.selectedTracks, true).subscribe((data: any) => {
+        this.getTracks();
+      });
+    }
+  }
+
+  activePlaylistTracks() {
+    if (this.selectedTracks.length > 0) {
+      this.spotifyService.activatePlaylistTracks(this.playlistId, this.selectedTracks, true).subscribe((data: any) => {
+        this.getTracks();
+      });
+    }
   }
 }

@@ -35,8 +35,13 @@ export class SpotifyService {
     return this.http.get(getUrl, this.httpOptions);
   }
 
-  disablePlaylistTracks(playlistId: number, tracksIds: Array<number>, disableTracks: boolean): Observable<any> {
+  disablePlaylistTracks(playlistId: number, tracksIds: Array<string>, disableTracks: boolean): Observable<any> {
     const postUrl = this.apiUrl + '/spotify/playlist/' + playlistId + '/disableTracks';
+    return this.http.patch(postUrl, { tracksIds, disableTracks }, this.httpOptions);
+  }
+
+  activatePlaylistTracks(playlistId: number, tracksIds: Array<string>, disableTracks: boolean): Observable<any> {
+    const postUrl = this.apiUrl + '/spotify/playlist/' + playlistId + '/activeTracks';
     return this.http.patch(postUrl, { tracksIds, disableTracks }, this.httpOptions);
   }
 }
