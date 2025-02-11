@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { SpotifyService } from '../../services/platform/spotify.service';
 import { CommonModule, DatePipe } from '@angular/common';
 import { TracksComponent } from './playlist/tracks/tracks.component';
+import { TablePlaceholderComponent } from "../placeholders/table-placeholder/table-placeholder.component";
 
 @Component({
   selector: 'app-spotify',
   standalone: true,
-  imports: [CommonModule, TracksComponent],
+  imports: [CommonModule, TracksComponent, TablePlaceholderComponent],
   templateUrl: './spotify.component.html',
   styleUrl: './spotify.component.scss',
   providers: [DatePipe]
