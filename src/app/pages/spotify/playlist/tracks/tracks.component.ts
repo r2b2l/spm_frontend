@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { SpotifyService } from '../../../../services/platform/spotify.service';
 import { CommonModule, DatePipe } from '@angular/common';
+import { PlaylistService } from '../../../../services/playlist/playlist.service';
 
 @Component({
   selector: 'app-tracks',
@@ -17,7 +18,7 @@ export class TracksComponent implements OnInit, OnChanges {
   selectedTracks: Array<string> = [];
   isEveryTrackSelected: boolean = false;
 
-  constructor(private spotifyService: SpotifyService) {
+  constructor(private spotifyService: SpotifyService, private playlistService: PlaylistService) {
    }
 
   
@@ -33,9 +34,26 @@ export class TracksComponent implements OnInit, OnChanges {
     }
   }
 
+  /**
+   * Get the tracks of the playlist
+   * First, get tracks from database
+   * If there are no tracks in the database, get tracks from Spotify
+   */
   getTracks() {
+    this.getTracksFromDatabase().subscribe((data: any) => {
+      this.tracks = data;
+      if (this.tracks.length === 0) {
+        this.getTracksFromSpotify();
+      }
+    });
+  }
+
+  getTracksFromDatabase() {
+    return this.playlistService.getPlaylistTracks(this.playlistId)
+  }
+
+  getTracksFromSpotify() {
     this.spotifyService.getTracks(this.playlistId).subscribe((data: any) => {
-      console.log('Tracks', data);
       this.tracks = data.items;
     });
   }

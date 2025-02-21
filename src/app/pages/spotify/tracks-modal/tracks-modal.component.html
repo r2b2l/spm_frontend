@@ -1,0 +1,48 @@
+<div class="bg-gray-500/30 fixed top-0 left-0 hidden w-full h-full overflow-x-hidden overflow-y-auto transition-opacity ease-linear opacity-0 z-sticky outline-0"
+    [id]="'modal-' + playlist.id" aria-hidden="true">
+    <div
+        class="relative w-auto m-2 transition-transform duration-300 ease-out pointer-events-none sm:m-28 lg:mt-48 -translate-y-13">
+        <div
+            class="relative flex flex-col w-full bg-white border border-solid pointer-events-auto dark:bg-gray-950 bg-clip-padding border-black/20 rounded-xl outline-0">
+            <div
+                class="flex items-center justify-between p-4 border-b border-solid shrink-0 border-slate-100 rounded-t-xl">
+                <div>
+                    <img [src]="playlist.imageUrl"
+                        class="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-in-out text-sm h-9 w-9 rounded-xl"
+                        [alt]="playlist.id + 'image'" />
+                </div>
+                <div class="flex flex-col justify-center">
+                    <h6 class="mb-0 leading-normal text-sm">{{ playlist.name }}</h6>
+                    <!-- <p class="mb-0 leading-tight text-xs text-slate-400">{{ playlist.description }}</p> -->
+                    <p class="mb-0 leading-tight text-xs text-slate-400">De: {{
+                        playlist.ownerName }}</p>
+                </div>
+                <div class="flex flex-col justify-center ml-4">
+                    <button (click)="reloadPlaylist(playlist.id)" type="button"
+                        class="inline-block px-3 py-3 text-xs font-bold text-center text-blue-500 uppercase align-middle transition-all ease-in bg-transparent border border-blue-500 border-solid rounded-lg shadow-none cursor-pointer active:opacity-85 leading-pro tracking-tight-rem bg-150 bg-x-25 hover:scale-102 active:shadow-xs hover:text-blue-500 hover:opacity-75 hover:shadow-none active:scale-100 active:border-blue-500 active:bg-blue-500 active:text-white hover:active:border-blue-500 hover:active:bg-transparent hover:active:text-blue-500 hover:active:opacity-75">
+                        <!-- <button type="button" class="inline-block px-3 py-3 mr-3 font-bold text-center text-white uppercase align-middle transition-all rounded-lg cursor-pointer leading-normal text-xs ease-in tracking-tight-rem shadow-md bg-150 bg-x-25 hover:-translate-y-px active:opacity-85 hover:shadow-md"> -->
+                        <i class="fas fa-sync hover:animate-spin-slow"></i>
+                    </button>
+                </div>
+                <button (click)="closePlaylistModal(playlist.id)" type="button" data-toggle="modal"
+                    data-target="#import"
+                    class="fa fa-close w-4 h-4 ml-auto box-content p-2 text-black dark:text-white border-0 rounded-1.5 opacity-50 cursor-pointer -m-2 "
+                    data-dismiss="modal"></button>
+            </div>
+            <div class="relative flex-auto p-4">
+                @if (playlistTracksActives[playlist.id]) {
+                <app-tracks [playlistId]="playlist.id"
+                    [reloadPlaylist]="playlistTracksReload[playlist.id]"></app-tracks>
+                } @else {
+                <span class="sr-only">Loading...</span>
+                }
+            </div>
+            <div
+                class="flex flex-wrap items-center justify-end p-3 border-t border-solid shrink-0 border-slate-100 rounded-b-xl">
+                <button (click)="closePlaylistModal(playlist.id)" type="button" data-toggle="modal"
+                    [attr.data-target]="'#modal-' + playlist.id" class="button"
+                    class="inline-block px-3 py-3 text-xs font-bold text-center text-blue-500 uppercase align-middle transition-all ease-in bg-transparent border border-blue-500 border-solid rounded-lg shadow-none cursor-pointer active:opacity-85 leading-pro tracking-tight-rem bg-150 bg-x-25 hover:scale-102 active:shadow-xs hover:text-blue-500 hover:opacity-75 hover:shadow-none active:scale-100 active:border-blue-500 active:bg-blue-500 active:text-white hover:active:border-blue-500 hover:active:bg-transparent hover:active:text-blue-500 hover:active:opacity-75">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>

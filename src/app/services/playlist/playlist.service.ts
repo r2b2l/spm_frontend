@@ -19,4 +19,9 @@ export class PlaylistService {
     const getUrl = this.apiUrl + '/playlist/playlists';
     return this.http.get(getUrl, this.httpOptions);
   }
+
+  getPlaylistTracks(playlistId: number): Observable<any> {
+    const getUrl = this.apiUrl + '/playlisttracks/' + playlistId + '/tracks';
+    return this.http.get(getUrl, this.httpOptions);
+  }
 }
