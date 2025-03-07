@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { TracksComponent } from '../playlist/tracks/tracks.component';
+import { TrackService } from '../../../services/track/track.service';
 
 @Component({
   selector: 'app-tracks-modal',
@@ -18,6 +19,7 @@ export class TracksModalComponent implements OnChanges {
     if (changes['openModal']) {
       console.log('openModal', this.openModal);
       if (this.openModal > 0) {
+        console.log('openPlaylistModal', this.playlist.id);
         this.openPlaylistModal(this.playlist.id);
       }
     }
@@ -36,7 +38,7 @@ export class TracksModalComponent implements OnChanges {
     }
   }
 
-  reloadPlaylist(playlistId: number): void {
+  reloadPlaylist(playlistId: any): void {
     this.playlistTracksReload[playlistId]++;
   }
 

@@ -12,19 +12,21 @@ import { filter, Subscription } from 'rxjs';
 })
 export class AppComponent  implements OnInit, OnDestroy {
   title = 'spm_frontend';
-  isLogged = false;
+  isLogged: boolean = false;
   routeName = '';
-  private authSubscription: Subscription;
+  isLoading: boolean = true;
+  private authSubscription: Subscription | undefined;
 
   constructor(private authService: AuthService, private router: Router) {
-    this.authSubscription = this.authService.authToken$.subscribe(token => {
-      this.isLogged = !!token;
-    });
   }
 
   ngOnInit() {
-    const authToken = this.authService.authToken;
-    this.isLogged = authToken !== null;
+    console.log('AppComponent OnInit');
+    this.authSubscription = this.authService.authState$.subscribe(state => {
+      console.log('Auth state : ' + state);
+      this.isLogged = state;
+      this.isLoading = false;
+    });
     // Subscribe to route changes and update routeName
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
@@ -34,7 +36,6 @@ export class AppComponent  implements OnInit, OnDestroy {
   }
 
   updateBreadcrumb() {
-    // Obtenez l'URL actuelle et divisez-la pour obtenir le dernier segment
     const urlSegments = this.router.url.split('/').filter(segment => segment);
     if (urlSegments.length === 0) {
       this.routeName = 'Accueil';
@@ -64,6 +65,8 @@ export class AppComponent  implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.authSubscription.unsubscribe();
+    if(this.authSubscription) {
+      this.authSubscription.unsubscribe();
+    }
   }
 }

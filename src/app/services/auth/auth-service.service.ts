@@ -19,8 +19,11 @@ export class AuthService {
   private readonly TOKEN_KEY = 'auth_token';
   private apiUrl = environment.apiUrl;
   private localStorage: Storage | undefined;
-  private authTokenSource = new BehaviorSubject<string | null>(null);
-  authToken$ = this.authTokenSource.asObservable();
+  // private authTokenSource = new BehaviorSubject<string | null>(null);
+  private authState = new BehaviorSubject<boolean>(false);
+  // private authState = new BehaviorSubject<boolean>(this.isUserAuthenticated);
+  // authToken$ = this.authTokenSource.asObservable();
+  authState$ = this.authState.asObservable();
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -28,6 +31,10 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router, @Inject(DOCUMENT) private document: Document) {
     this.localStorage = document.defaultView?.localStorage;
+    console.log(this.localStorage);
+    if (this.localStorage && this.localStorage.getItem(this.TOKEN_KEY)) {
+      this.authState.next(true);
+    }
    }
 
   /**
@@ -62,6 +69,7 @@ export class AuthService {
    */
   get isUserAuthenticated(): boolean {
     if (!this.localStorage) {
+      console.log('isUserAuthenticated, No local storage');
       return false;
     }
     return !!this.localStorage.getItem(this.TOKEN_KEY);
@@ -72,8 +80,7 @@ export class AuthService {
       return null;
     }
     const token = this.localStorage.getItem(this.TOKEN_KEY);
-    this.authTokenSource.next(token);
-    return token
+    return token;
   }
 
   /**
@@ -84,9 +91,10 @@ export class AuthService {
     if (this.localStorage) {
       if (token) {
         this.localStorage.setItem(this.TOKEN_KEY, token);
-        this.authTokenSource.next(token);
+        this.authState.next(true);
       } else {
         this.localStorage.removeItem(this.TOKEN_KEY);
+        this.authState.next(false);
       }
     }
   }

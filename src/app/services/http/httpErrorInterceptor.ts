@@ -10,8 +10,14 @@ export function httpErrorInterceptor(req: HttpRequest<unknown>, next: HttpHandle
       catchError((error: HttpErrorResponse) => {
         if (error.status === 403) {
             localStorage.removeItem(TOKEN_KEY);
-            router.navigateByUrl('/login');
+            router.navigateByUrl('');
+            // router.navigateByUrl('/login');
         }
+        if (error.status === 401) {
+          localStorage.removeItem(TOKEN_KEY);
+          router.navigateByUrl('');
+          router.navigateByUrl('/login');
+      }
         return throwError(() => {});
       }),
       finalize(() => {}));

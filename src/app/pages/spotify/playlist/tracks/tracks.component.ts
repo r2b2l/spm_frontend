@@ -2,6 +2,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { SpotifyService } from '../../../../services/platform/spotify.service';
 import { CommonModule, DatePipe } from '@angular/common';
 import { PlaylistService } from '../../../../services/playlist/playlist.service';
+import { TrackService } from '../../../../services/track/track.service';
 
 @Component({
   selector: 'app-tracks',
@@ -12,13 +13,13 @@ import { PlaylistService } from '../../../../services/playlist/playlist.service'
   styleUrl: './tracks.component.scss'
 })
 export class TracksComponent implements OnInit, OnChanges {
-  @Input() playlistId: number = 0;
+  @Input() playlistId: string = '';
   @Input() reloadPlaylist: number = 0;
   tracks: Array<any> = [];
   selectedTracks: Array<string> = [];
   isEveryTrackSelected: boolean = false;
 
-  constructor(private spotifyService: SpotifyService, private playlistService: PlaylistService) {
+  constructor(private spotifyService: SpotifyService, private playlistService: PlaylistService, private trackService: TrackService) {
    }
 
   
@@ -92,5 +93,12 @@ export class TracksComponent implements OnInit, OnChanges {
         this.getTracks();
       });
     }
+  }
+
+  updateTrackDisabled(track: any): void {
+    console.log('updateTrackDisabled', track);
+    this.trackService.patchTrackSync(this.playlistId, track.id, !track.disabled).subscribe((data: any) => {
+      this.getTracks();
+    })
   }
 }
