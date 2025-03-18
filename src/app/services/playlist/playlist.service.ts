@@ -20,6 +20,11 @@ export class PlaylistService {
     return this.http.get(getUrl, this.httpOptions);
   }
 
+  getPlaylistByPlatformName(platformName: string): Observable<any> {
+    const getUrl = this.apiUrl + '/playlist/playlists/' + platformName;
+    return this.http.get(getUrl, this.httpOptions);
+  }
+
   getPlaylistsCount(): Observable<any> {
     const getUrl = this.apiUrl + '/playlist/playlists/count';
     return this.http.get(getUrl, this.httpOptions);
@@ -27,6 +32,11 @@ export class PlaylistService {
 
   getAllracksCount(): Observable<any> {
     const getUrl = this.apiUrl + '/playlist/playlists/tracks/count';
+    return this.http.get(getUrl, this.httpOptions);
+  }
+
+  getPlaylistById(playlistId: string): Observable<any> {
+    const getUrl = this.apiUrl + '/playlist/' + playlistId;
     return this.http.get(getUrl, this.httpOptions);
   }
 

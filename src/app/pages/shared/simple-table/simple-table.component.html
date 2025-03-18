@@ -1,0 +1,67 @@
+<!-- Scroll interne -->
+<div class="overflow-auto max-h-[400px]">
+  <table class="items-center w-full mb-0 align-top border-gray-200 text-slate-500">
+    <!-- En-tête -->
+    <thead class="align-bottom">
+      <tr>
+        @for (col of columns; track $index) {
+        <th
+          class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70 cursor-pointer"
+          (click)="sort(col.key)">
+          {{ col.label }}
+          @if (sortedColumn === col.key) {
+          <span>
+            {{ sortDirection === 'asc' ? '▲' : '▼' }}
+          </span>
+          }
+
+        </th>
+        }
+        @if (actionLabel) {
+        <th class="px-6 py-3 font-semibold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">Actions</th>
+        }
+      </tr>
+    </thead>
+
+    <!-- Corps -->
+    <tbody>
+      @for (row of sortedData; track $index) {
+      <tr class="hover:bg-gray-100">
+        @for (col of columns; track $index) {
+        <td class="pl-4 border-b">
+          <div class="font-semibold leading-tight mb-0 text-xs">
+            {{ row[col.key] }}
+          </div>
+        </td>
+        }
+        @if (actionLabel) {
+        <td class="p-2 pl-4 border-b">
+          <div class="font-semibold leading-tight mb-0 text-xs">
+            <button (click)="onActionClick(row)" 
+            class="inline-block px-8 py-2 text-xs font-semibold text-center text-blue-500 uppercase align-middle transition-all ease-in bg-transparent border border-blue-500 border-solid rounded-lg shadow-none cursor-pointer active:opacity-85 leading-pro tracking-tight-rem bg-150 bg-x-25 hover:scale-102 active:shadow-xs hover:text-blue-500 hover:opacity-75 hover:shadow-none active:scale-100 active:border-blue-500 active:bg-blue-500 active:text-white hover:active:border-blue-500 hover:active:bg-transparent hover:active:text-blue-500 hover:active:opacity-75">
+              {{ actionLabel }}
+            </button>
+          </div>
+        </td>
+        }
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+<!-- Pagination -->
+<div class="items-center mt-4">
+  <button class="p-2 rounded-md" (click)="changePage(1)" [disabled]="currentPage === 1">⏮</button>
+  <button class="p-2 rounded-md" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">◀</button>
+
+  <span class="font-semibold text-xs">Page</span>
+  <input type="number" class="w-12 font-semibold text-xs text-center p-1 rounded-md" [(ngModel)]="currentPage"
+    (change)="changePage(currentPage)" [max]="totalPages" [min]="1" />
+  <span class="font-semibold text-xs">/ {{ totalPages }}</span>
+
+  <button class="p-2 border rounded-md" (click)="changePage(currentPage + 1)"
+    [disabled]="currentPage === totalPages">▶</button>
+  <button class="p-2 border rounded-md" (click)="changePage(totalPages)"
+    [disabled]="currentPage === totalPages">⏭</button>
+</div>

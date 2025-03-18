@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SpotifyService } from '../../services/platform/spotify.service';
 import { CommonModule, DatePipe } from '@angular/common';
-import { TracksComponent } from './playlist/tracks/tracks.component';
 import { TablePlaceholderComponent } from "../placeholders/table-placeholder/table-placeholder.component";
 import { PlaylistTableComponent } from "./playlist/playlist-table/playlist-table.component";
 import { PlaylistService } from '../../services/playlist/playlist.service';
@@ -18,20 +17,16 @@ export class SpotifyComponent implements OnInit {
   isLoading: boolean = false;
   isConnected: boolean = false;
   playlists: Array<any> = [];
+
   constructor(private spotifyService: SpotifyService, private playlistService: PlaylistService) { }
 
   ngOnInit(): void {
     this.isLoading = true;
     // First, fetch all playlists in our database
-    this.getSpotifyPlalistsFromDatabase();
+    this.getSpotifyPlaylistsFromDatabase();
     this.spotifyService.isConnected().subscribe((data: any) => {
       this.isConnected = data.isConnected;
       console.log('Spotify connected ?', this.isConnected);
-      // if (this.isConnected) {
-      //   this.getPlaylistsFromSpotify();
-      // } else {
-      //   this.isLoading = false;
-      // }
     });
   }
 
@@ -52,11 +47,10 @@ export class SpotifyComponent implements OnInit {
     this.isLoading = false;
   }
 
-  getSpotifyPlalistsFromDatabase(): void {
+  getSpotifyPlaylistsFromDatabase(): void {
     this.loadPlaylists();
-    this.playlistService.getPlaylists().subscribe((data: any) => {
+    this.playlistService.getPlaylistByPlatformName('Spotify').subscribe((data: any) => {
       // order the playlists by date descending
-      console.log(data);
       data.sort((a: any, b: any) => {
         return b.tracksNumber - a.tracksNumber;
       });
@@ -71,12 +65,8 @@ export class SpotifyComponent implements OnInit {
       data.sort((a: any, b: any) => {
         return b.tracksNumber - a.tracksNumber;
       });
+      
       this.playlists = data;
-      // For each playlist, add a new entry in playlistTracksActives with key the playlist id and value false
-      // this.playlists.forEach((playlist: any) => {
-      //   this.playlistTracksActives[playlist.id] = false;
-      //   this.playlistTracksReload[playlist.id] = 0;
-      // });
       this.DoneLoadPlaylists();
     });
   }

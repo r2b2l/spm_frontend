@@ -20,14 +20,14 @@
                 <div class="flex flex-col justify-center ml-4">
                     <button (click)="reloadPlaylist(playlist.id)" type="button"
                         class="inline-block px-3 py-3 text-xs font-bold text-center text-blue-500 uppercase align-middle transition-all ease-in bg-transparent border border-blue-500 border-solid rounded-lg shadow-none cursor-pointer active:opacity-85 leading-pro tracking-tight-rem bg-150 bg-x-25 hover:scale-102 active:shadow-xs hover:text-blue-500 hover:opacity-75 hover:shadow-none active:scale-100 active:border-blue-500 active:bg-blue-500 active:text-white hover:active:border-blue-500 hover:active:bg-transparent hover:active:text-blue-500 hover:active:opacity-75">
-                        <!-- <button type="button" class="inline-block px-3 py-3 mr-3 font-bold text-center text-white uppercase align-middle transition-all rounded-lg cursor-pointer leading-normal text-xs ease-in tracking-tight-rem shadow-md bg-150 bg-x-25 hover:-translate-y-px active:opacity-85 hover:shadow-md"> -->
+                        Synchroniser
                         <i class="fas fa-sync hover:animate-spin-slow"></i>
                     </button>
                 </div>
                 <button (click)="closePlaylistModal(playlist.id)" type="button" data-toggle="modal"
                     data-target="#import"
                     class="fa fa-close w-4 h-4 ml-auto box-content p-2 text-black dark:text-white border-0 rounded-1.5 opacity-50 cursor-pointer -m-2 "
-                    data-dismiss="modal"></button>
+                    data-dismiss="modal">X</button>
             </div>
             <div class="relative flex-auto p-4">
                 @if (playlistTracksActives[playlist.id]) {

@@ -24,55 +24,9 @@ export class PlaylistTableComponent {
     console.log(this.openModals);
   }
 
-
-  // playlistTracksActives: Array<boolean> = [];
-  // playlistTracksReload: Array<number> = [];
-
-  // triggerModal(): void {
-  //   console.log('triggerModal');
-  //   const modal = document.getElementById('import');
-  //   // Check if modal element exists before removing the 'hidden' class
-  //   if (modal) {
-  //     modal.classList.remove('hidden');
-  //     modal.classList.remove('opacity-0');
-  //     modal.setAttribute('aria-hidden', 'false');
-  //   }
-  // }
-
-  // closeModal(): void {
-  //   console.log('closeModal');
-  //   const modal = document.getElementById('import');
-  //   // Check if modal element exists before adding the 'hidden' class
-  //   if (modal) {
-  //     modal.classList.add('opacity-0');
-  //     modal.setAttribute('aria-hidden', 'true');
-  //     setTimeout(() => {
-  //       modal.classList.add('hidden');
-  //     }, 500);
-  //   }
-  // }
-
   openPlaylistModal(playlistId: number): void {
     // increment the openModal linked to playlist to give information to relateed app-tracks-modal to open
     console.log('openPlaylistModal', playlistId);
     this.openModals[playlistId]++;
   }
-
-  // closePlaylistModal(playlistId: number): void {
-  //   const modal = document.getElementById('modal-' + playlistId);
-  //   // Check if modal element exists before adding the 'hidden' class
-  //   if (modal) {
-  //     modal.classList.add('opacity-0');
-  //     modal.setAttribute('aria-hidden', 'true');
-  //     setTimeout(() => {
-  //       modal.classList.add('hidden');
-  //     }, 500);
-
-  //     this.playlistTracksActives[playlistId] = false;
-  //   }
-  // }
-
-  // reloadPlaylist(playlistId: number): void {
-  //   this.playlistTracksReload[playlistId]++;
-  // }
 }
