@@ -60,8 +60,8 @@
     (change)="changePage(currentPage)" [max]="totalPages" [min]="1" />
   <span class="font-semibold text-xs">/ {{ totalPages }}</span>
 
-  <button class="p-2 border rounded-md" (click)="changePage(currentPage + 1)"
+  <button class="p-2 rounded-md" (click)="changePage(currentPage + 1)"
     [disabled]="currentPage === totalPages">▶</button>
-  <button class="p-2 border rounded-md" (click)="changePage(totalPages)"
+  <button class="p-2 rounded-md" (click)="changePage(totalPages)"
     [disabled]="currentPage === totalPages">⏭</button>
 </div>

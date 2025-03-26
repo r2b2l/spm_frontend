@@ -39,7 +39,13 @@ export class TracksModalComponent implements OnChanges {
   }
 
   reloadPlaylist(playlistId: any): void {
+    console.log('reloadPlaylist', playlistId);
+    if (!this.playlistTracksReload[playlistId]) {
+      this.playlistTracksReload[playlistId] = 0;
+    }
+
     this.playlistTracksReload[playlistId]++;
+    console.log(this.playlistTracksReload[playlistId]);
   }
 
   triggerModal(): void {

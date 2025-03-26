@@ -34,7 +34,8 @@ export class TracksComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     console.log('playlistId', this.playlistId);
     if (changes['reloadPlaylist'] && changes['reloadPlaylist'].currentValue > changes['reloadPlaylist'].previousValue) {
-      this.getTracks();
+      // If we reload the playlist, get the tracks from Spotify
+      this.getTracksFromSpotify();
     }
   }
 
