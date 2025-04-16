@@ -4,6 +4,7 @@ import { PlaylistService } from '../../../services/playlist/playlist.service';
 import { TablePlaceholderComponent } from '../../placeholders/table-placeholder/table-placeholder.component';
 import { SimpleTableComponent } from '../../shared/simple-table/simple-table.component';
 import { CardPlaceholderComponent } from '../../placeholders/card-placeholder/card-placeholder.component';
+import { SpotifyService } from '../../../services/platform/spotify.service';
 
 // Todo: Create a TrackModel interface
 interface TrackModel {
@@ -30,6 +31,7 @@ export class PlaylistComponent implements OnInit {
   public topArtists: Array<any> = [];
   public isHeaderLoaded: boolean = false;
   public isTracksLoaded: boolean = false;
+  public isSpotifyConnected: boolean|null = null;
 
   columns: { key: keyof TrackModel; label: string }[] = [
     { key: 'name', label: 'Playlist' },
@@ -39,7 +41,10 @@ export class PlaylistComponent implements OnInit {
   ];
 
 
-  constructor(private route: ActivatedRoute, private playlistService: PlaylistService) {}
+  constructor(private route: ActivatedRoute, 
+    private playlistService: PlaylistService,
+    private spotifyService: SpotifyService
+  ) {}
   
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -78,6 +83,19 @@ export class PlaylistComponent implements OnInit {
       this.topArtists = Object.keys(this.artists).sort((a, b) => this.artists[b] - this.artists[a]).slice(0, 3);
       this.isTracksLoaded = true;
     });
+  }
+
+  refreshSpotifyPlaylist() {
+    this.spotifyService.isConnected().subscribe((data: any) => {
+      this.isSpotifyConnected = data.isConnected
+      if (this.isSpotifyConnected) {
+        this.spotifyService.getTracks(this.playlistId).subscribe((data: any) => {
+          console.log('Playlist refreshed', data);
+          this.getPlaylistTracks();
+        });
+      }
+    });
+
   }
 
 }

@@ -2,6 +2,13 @@
 <app-card-placeholder></app-card-placeholder>
 <app-card-placeholder></app-card-placeholder>
 } @else {
+    @if (isSpotifyConnected === false) {
+        <div class="alert-container px-2">
+            <div class="relative w-full py-4 px-8  mb-2 text-white rounded-lg bg-emerald-500">
+                Vous ne semblez pas connecté à Spotify. Veuillez vous connecter via le paramétrage avant de rafraichir.
+            </div>
+        </div>
+    }  
 <div class="flex">
     <div class="p-2 mx-2 rounded-xl shadow-md w-2/3 bg-gray-50">
         <div class="bg-gray-50">
@@ -49,6 +56,16 @@
     </div>
     <div class="p-2 mx-2 rounded-xl shadow-md w-1/3 bg-gray-50">
         <div class="bg-gray-50">
+            @if (playlist.platform.name === 'Spotify') {
+            <a (click)="refreshSpotifyPlaylist()"
+                class="inline-block px-8 py-2 text-xs font-semibold text-center text-blue-500 uppercase align-middle transition-all ease-in bg-transparent border border-blue-500 border-solid rounded-lg shadow-none cursor-pointer active:opacity-85 leading-pro tracking-tight-rem bg-150 bg-x-25 hover:scale-102 active:shadow-xs hover:text-blue-500 hover:opacity-75 hover:shadow-none active:scale-100 active:border-blue-500 active:bg-blue-500 active:text-white hover:active:border-blue-500 hover:active:bg-transparent hover:active:text-blue-500 hover:active:opacity-75">
+                Rafraichir la playlist {{ playlist.platform.name }}
+            </a>
+            }
+            <a [href]="playlist.externalUrl" target="_blank"
+                class="inline-block px-8 py-2 text-xs font-semibold text-center text-blue-500 uppercase align-middle transition-all ease-in bg-transparent border border-blue-500 border-solid rounded-lg shadow-none cursor-pointer active:opacity-85 leading-pro tracking-tight-rem bg-150 bg-x-25 hover:scale-102 active:shadow-xs hover:text-blue-500 hover:opacity-75 hover:shadow-none active:scale-100 active:border-blue-500 active:bg-blue-500 active:text-white hover:active:border-blue-500 hover:active:bg-transparent hover:active:text-blue-500 hover:active:opacity-75">
+                Ouvrir sur {{ playlist.platform.name }}
+            </a>
             <a [href]="playlist.externalUrl" target="_blank"
                 class="inline-block px-8 py-2 text-xs font-semibold text-center text-blue-500 uppercase align-middle transition-all ease-in bg-transparent border border-blue-500 border-solid rounded-lg shadow-none cursor-pointer active:opacity-85 leading-pro tracking-tight-rem bg-150 bg-x-25 hover:scale-102 active:shadow-xs hover:text-blue-500 hover:opacity-75 hover:shadow-none active:scale-100 active:border-blue-500 active:bg-blue-500 active:text-white hover:active:border-blue-500 hover:active:bg-transparent hover:active:text-blue-500 hover:active:opacity-75">
                 Ouvrir sur {{ playlist.platform.name }}
