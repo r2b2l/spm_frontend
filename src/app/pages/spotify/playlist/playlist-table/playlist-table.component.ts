@@ -3,12 +3,11 @@ import { Component, Input } from '@angular/core';
 import { TracksModalComponent } from "../../tracks-modal/tracks-modal.component";
 
 @Component({
-  selector: 'app-playlist-table',
-  standalone: true,
-  imports: [CommonModule, TracksModalComponent],
-  templateUrl: './playlist-table.component.html',
-  styleUrl: './playlist-table.component.scss',
-  providers: [DatePipe]
+    selector: 'app-playlist-table',
+    imports: [CommonModule, TracksModalComponent],
+    templateUrl: './playlist-table.component.html',
+    styleUrl: './playlist-table.component.scss',
+    providers: [DatePipe]
 })
 export class PlaylistTableComponent {
   @Input() playlists: any[] = [];

@@ -4,11 +4,10 @@ import { AuthService } from './services/auth/auth-service.service';
 import { filter, Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+    selector: 'app-root',
+    imports: [RouterOutlet, RouterLink, RouterLinkActive],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss'
 })
 export class AppComponent  implements OnInit, OnDestroy {
   title = 'spm_frontend';

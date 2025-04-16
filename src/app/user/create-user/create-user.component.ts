@@ -6,11 +6,10 @@ import { passwordValidator } from '../../validators/password.validator';
 import { UserService } from '../../services/user/user.service';
 
 @Component({
-  selector: 'app-create-user',
-  standalone: true,
-  imports: [ReactiveFormsModule ],
-  templateUrl: './create-user.component.html',
-  styleUrls: ['./create-user.component.scss']
+    selector: 'app-create-user',
+    imports: [ReactiveFormsModule],
+    templateUrl: './create-user.component.html',
+    styleUrls: ['./create-user.component.scss']
 })
 export class CreateUserComponent implements OnInit {
   user: User = new User(0, '', '', '', '');

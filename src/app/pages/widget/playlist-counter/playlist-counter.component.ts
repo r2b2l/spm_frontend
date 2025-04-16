@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { PlaylistService } from '../../../services/playlist/playlist.service';
 
 @Component({
-  selector: 'app-playlist-counter',
-  standalone: true,
-  imports: [],
-  templateUrl: './playlist-counter.component.html',
-  styleUrl: './playlist-counter.component.scss'
+    selector: 'app-playlist-counter',
+    imports: [],
+    templateUrl: './playlist-counter.component.html',
+    styleUrl: './playlist-counter.component.scss'
 })
 export class PlaylistCounterComponent implements OnInit {
   public playlistsCount: number = 0;

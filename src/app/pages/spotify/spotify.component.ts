@@ -6,12 +6,11 @@ import { PlaylistTableComponent } from "./playlist/playlist-table/playlist-table
 import { PlaylistService } from '../../services/playlist/playlist.service';
 
 @Component({
-  selector: 'app-spotify',
-  standalone: true,
-  imports: [CommonModule, TablePlaceholderComponent, PlaylistTableComponent],
-  templateUrl: './spotify.component.html',
-  styleUrl: './spotify.component.scss',
-  providers: [DatePipe]
+    selector: 'app-spotify',
+    imports: [CommonModule, TablePlaceholderComponent, PlaylistTableComponent],
+    templateUrl: './spotify.component.html',
+    styleUrl: './spotify.component.scss',
+    providers: [DatePipe]
 })
 export class SpotifyComponent implements OnInit {
   isLoading: boolean = false;

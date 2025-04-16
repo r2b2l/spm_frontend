@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { PlaylistService } from '../../../services/playlist/playlist.service';
 
 @Component({
-  selector: 'app-tracks-counter',
-  standalone: true,
-  imports: [],
-  templateUrl: './tracks-counter.component.html',
-  styleUrl: './tracks-counter.component.scss'
+    selector: 'app-tracks-counter',
+    imports: [],
+    templateUrl: './tracks-counter.component.html',
+    styleUrl: './tracks-counter.component.scss'
 })
 export class TracksCounterComponent implements OnInit {
   public tracksCount: number = 0;

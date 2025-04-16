@@ -14,11 +14,10 @@ interface PlaylistModel {
 }
 
 @Component({
-  selector: 'app-playlists',
-  standalone: true,
-  imports: [SimpleTableComponent, TablePlaceholderComponent],
-  templateUrl: './playlists.component.html',
-  styleUrl: './playlists.component.scss'
+    selector: 'app-playlists',
+    imports: [SimpleTableComponent, TablePlaceholderComponent],
+    templateUrl: './playlists.component.html',
+    styleUrl: './playlists.component.scss'
 })
 export class PlaylistsComponent implements OnInit {
 

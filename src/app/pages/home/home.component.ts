@@ -5,11 +5,10 @@ import { PlaylistCounterComponent } from '../widget/playlist-counter/playlist-co
 import { TracksCounterComponent } from '../widget/tracks-counter/tracks-counter.component';
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [CardPlaceholderComponent, PlaylistCounterComponent, TracksCounterComponent],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+    selector: 'app-home',
+    imports: [CardPlaceholderComponent, PlaylistCounterComponent, TracksCounterComponent],
+    templateUrl: './home.component.html',
+    styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
   constructor() { }

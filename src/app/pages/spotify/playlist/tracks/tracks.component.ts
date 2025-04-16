@@ -6,12 +6,11 @@ import { TrackService } from '../../../../services/track/track.service';
 import { TablePlaceholderComponent } from '../../../placeholders/table-placeholder/table-placeholder.component';
 
 @Component({
-  selector: 'app-tracks',
-  standalone: true,
-  imports: [CommonModule, TablePlaceholderComponent],
-  providers: [DatePipe],
-  templateUrl: './tracks.component.html',
-  styleUrl: './tracks.component.scss'
+    selector: 'app-tracks',
+    imports: [CommonModule, TablePlaceholderComponent],
+    providers: [DatePipe],
+    templateUrl: './tracks.component.html',
+    styleUrl: './tracks.component.scss'
 })
 export class TracksComponent implements OnInit, OnChanges {
   @Input() playlistId: string = '';

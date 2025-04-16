@@ -2,11 +2,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-simple-table',
-  standalone: true,
-  imports: [FormsModule],
-  templateUrl: './simple-table.component.html',
-  styleUrl: './simple-table.component.scss'
+    selector: 'app-simple-table',
+    imports: [FormsModule],
+    templateUrl: './simple-table.component.html',
+    styleUrl: './simple-table.component.scss'
 })
 export class SimpleTableComponent<T extends { [key: string]: any }> {
   @Input() columns: ReadonlyArray<{ key: keyof T; label: string }> = [];

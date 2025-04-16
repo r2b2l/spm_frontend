@@ -5,11 +5,10 @@ import { AuthService } from '../../services/auth/auth-service.service';
 import { User } from '../../models/user/user';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  standalone: true,
-  imports: [FormsModule, ReactiveFormsModule],
-  styleUrls: ['./login.component.scss']
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    imports: [FormsModule, ReactiveFormsModule],
+    styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   user: User = new User(0, '', '', '', '');

@@ -17,11 +17,10 @@ interface TrackModel {
 }
 
 @Component({
-  selector: 'app-playlist',
-  standalone: true,
-  imports: [TablePlaceholderComponent, CardPlaceholderComponent, SimpleTableComponent],
-  templateUrl: './playlist.component.html',
-  styleUrl: './playlist.component.scss'
+    selector: 'app-playlist',
+    imports: [TablePlaceholderComponent, CardPlaceholderComponent, SimpleTableComponent],
+    templateUrl: './playlist.component.html',
+    styleUrl: './playlist.component.scss'
 })
 export class PlaylistComponent implements OnInit {
   private playlistId!: string;

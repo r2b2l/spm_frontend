@@ -3,11 +3,10 @@ import { TracksComponent } from '../playlist/tracks/tracks.component';
 import { TrackService } from '../../../services/track/track.service';
 
 @Component({
-  selector: 'app-tracks-modal',
-  standalone: true,
-  imports: [TracksComponent],
-  templateUrl: './tracks-modal.component.html',
-  styleUrl: './tracks-modal.component.scss'
+    selector: 'app-tracks-modal',
+    imports: [TracksComponent],
+    templateUrl: './tracks-modal.component.html',
+    styleUrl: './tracks-modal.component.scss'
 })
 export class TracksModalComponent implements OnChanges {
   @Input() openModal: number = 0;
