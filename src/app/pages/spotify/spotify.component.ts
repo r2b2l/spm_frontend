@@ -4,6 +4,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { TablePlaceholderComponent } from "../placeholders/table-placeholder/table-placeholder.component";
 import { PlaylistTableComponent } from "./playlist/playlist-table/playlist-table.component";
 import { PlaylistService } from '../../services/playlist/playlist.service';
+import { map, Observable } from 'rxjs';
 
 @Component({
     selector: 'app-spotify',
@@ -13,9 +14,9 @@ import { PlaylistService } from '../../services/playlist/playlist.service';
     providers: [DatePipe]
 })
 export class SpotifyComponent implements OnInit {
-  isLoading: boolean = false;
-  isConnected: boolean = false;
-  playlists: Array<any> = [];
+  isLoading = false;
+  isConnectedData$: Observable<any> | undefined;
+  playlists$: Observable<Array<any>> | undefined;
 
   constructor(private spotifyService: SpotifyService, private playlistService: PlaylistService) { }
 
@@ -23,10 +24,7 @@ export class SpotifyComponent implements OnInit {
     this.isLoading = true;
     // First, fetch all playlists in our database
     this.getSpotifyPlaylistsFromDatabase();
-    this.spotifyService.isConnected().subscribe((data: any) => {
-      this.isConnected = data.isConnected;
-      console.log('Spotify connected ?', this.isConnected);
-    });
+    this.isConnectedData$ = this.spotifyService.isConnected();
   }
 
   connect(): void {
@@ -37,36 +35,32 @@ export class SpotifyComponent implements OnInit {
     });
   }
 
-  loadPlaylists(): void {
-    this.isLoading = true;
-    this.playlists = [];
-  }
-
-  DoneLoadPlaylists(): void {
-    this.isLoading = false;
-  }
-
   getSpotifyPlaylistsFromDatabase(): void {
-    this.loadPlaylists();
-    this.playlistService.getPlaylistByPlatformName('Spotify').subscribe((data: any) => {
-      // order the playlists by date descending
-      data.sort((a: any, b: any) => {
-        return b.tracksNumber - a.tracksNumber;
-      });
-      this.playlists = data;
-      this.DoneLoadPlaylists();
-    });
+    // Fetch playlists and sort it inside Observable
+    this.playlists$ = this.playlistService.getPlaylistByPlatformName('Spotify')
+      .pipe(
+        map((data: any) => {
+          // Sort the playlists by date descending
+          data.sort((a: any, b: any) => {
+            return b.updatedAt - a.updatedAt;
+          });
+          return data;
+        })
+      );
   }
 
   getPlaylistsFromSpotify(): void {
-    this.loadPlaylists();
-    this.spotifyService.getPlaylists().subscribe((data: any) => {
-      data.sort((a: any, b: any) => {
-        return b.tracksNumber - a.tracksNumber;
-      });
-      
-      this.playlists = data;
-      this.DoneLoadPlaylists();
-    });
+    // this.spotifyService.getPlaylists()
+    // Fetch playlists and sort it inside Observable
+    this.playlists$ = this.spotifyService.getPlaylists()
+      .pipe(
+        map((data: any) => {
+          // Sort the playlists by date descending
+          data.sort((a: any, b: any) => {
+            return b.updatedAt - a.updatedAt;
+          });
+          return data;
+        })
+      );
   }
 }

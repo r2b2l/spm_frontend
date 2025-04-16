@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { PlaylistService } from '../../../services/playlist/playlist.service';
 
 @Component({
@@ -7,10 +7,15 @@ import { PlaylistService } from '../../../services/playlist/playlist.service';
     templateUrl: './playlist-counter.component.html',
     styleUrl: './playlist-counter.component.scss'
 })
+/**
+ * Composant de compteur de playlists
+  * @description Ce composant affiche le nombre total de playlists dans l'application.
+ */
 export class PlaylistCounterComponent implements OnInit {
-  public playlistsCount: number = 0;
-
-  constructor(private playlistService: PlaylistService) { }
+  private playlistService: PlaylistService = inject(PlaylistService);
+  
+  // Compteur de playlists
+  public playlistsCount = 0;
 
   ngOnInit(): void {
     this.playlistService.getPlaylistsCount().subscribe((data: any) => {
@@ -18,7 +23,10 @@ export class PlaylistCounterComponent implements OnInit {
     });
   }
 
-
+  /**
+   * Animates the counter to the target value
+   * @param target Nombre cible à atteindre
+   */
   animateCounter(target: number) {
     let current = 0;
     const stepTime = 50; // Durée entre chaque incrémentation

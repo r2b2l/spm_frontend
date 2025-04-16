@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { PlaylistService } from '../../../services/playlist/playlist.service';
 
 @Component({
@@ -8,9 +8,9 @@ import { PlaylistService } from '../../../services/playlist/playlist.service';
     styleUrl: './tracks-counter.component.scss'
 })
 export class TracksCounterComponent implements OnInit {
-  public tracksCount: number = 0;
-
-  constructor(private playlistService: PlaylistService) { }
+  private playlistService: PlaylistService = inject(PlaylistService);
+  // tracks counter
+  public tracksCount = 0;
 
   ngOnInit(): void {
     this.playlistService.getAllracksCount().subscribe((data: any) => {
@@ -18,7 +18,10 @@ export class TracksCounterComponent implements OnInit {
     });
   }
 
-
+  /**
+   * Animates the counter from 0 to the target number.
+   * @param target Le nombre cible à atteindre
+   */
   animateCounter(target: number) {
     let current = 0;
     const stepTime = 50; // Durée entre chaque incrémentation

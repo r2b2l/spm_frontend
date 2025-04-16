@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthService } from './services/auth/auth-service.service';
 import { filter, Subscription } from 'rxjs';
@@ -10,17 +10,19 @@ import { filter, Subscription } from 'rxjs';
     styleUrl: './app.component.scss'
 })
 export class AppComponent  implements OnInit, OnDestroy {
-  title = 'spm_frontend';
-  isLogged: boolean = false;
-  routeName = '';
-  isLoading: boolean = true;
-  private authSubscription: Subscription | undefined;
+  private authService: AuthService = inject(AuthService);
+  private router: Router = inject(Router);
 
-  constructor(private authService: AuthService, private router: Router) {
-  }
+  title = 'spm_frontend';
+  isLogged = false;
+  routeName = '';
+  isLoading = true;
+  private authSubscription: Subscription | undefined;
 
   ngOnInit() {
     console.log('AppComponent OnInit');
+    
+    // Todo: Uutiliser un signal pour l'auth
     this.authSubscription = this.authService.authState$.subscribe(state => {
       console.log('Auth state : ' + state);
       this.isLogged = state;
